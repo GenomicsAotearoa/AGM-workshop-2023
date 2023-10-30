@@ -112,9 +112,9 @@ markdown_extensions:
   - pymdownx.snippets
 
 plugins: 
-  - glightbox:
-      effect: zoom
-      zoomable: true
+#  - glightbox:
+#      effect: zoom
+#      zoomable: true
   - search:
       lang: en
 
