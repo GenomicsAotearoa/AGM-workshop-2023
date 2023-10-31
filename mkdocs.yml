@@ -12,6 +12,9 @@ nav:
   - Home: index.md
   - Setup:
     - setup/setup.md
+  - Session 1: 
+    - session_1/0_kickoff.md
+    - session_1/1_introToNextflow.md
 
 
 theme:
