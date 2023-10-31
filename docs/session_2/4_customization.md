@@ -146,3 +146,10 @@ The completed run command will execute a small test set of files using the freeb
         ```
 
         If everything has worked - you will see the pipeline launching in your terminal 🚀
+
+
+!!! cboard-list-2 "Key points"
+
+    - Sarek comes with a test profiles that can be used to test the pipeline on your infrastructure
+    - Sample sheets are `csv` files that contain important meta data and the paths to your files
+    - Reference files are available from iGenomes        
