@@ -17,7 +17,7 @@
     
     
       
-        <title>2 pipelineStructure - Genomics Aotearoa AGM Training Workshop</title>
+        <title>Pipeline structure - Genomics Aotearoa AGM Training Workshop</title>
       
     
     
@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#pipeline-structure" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2 pipelineStructure
+              Pipeline structure
             
           </span>
         </div>
@@ -364,6 +369,155 @@
   
 
     
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Session 2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Session 2" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Session 2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_sessionOverview/" class="md-nav__link">
+        Session two: nf-core and pipelines
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_introTo_nfCore/" class="md-nav__link">
+        Introduction to nf-core
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Pipeline structure
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Pipeline structure
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-structure_1" class="md-nav__link">
+    Pipeline structure
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_sarekPipeline/" class="md-nav__link">
+        The Sarek pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_customization/" class="md-nav__link">
+        Customization: Configuring your run
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -381,6 +535,23 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-structure_1" class="md-nav__link">
+    Pipeline structure
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -398,9 +569,27 @@
 
 
 
-  <h1>2 pipelineStructure</h1>
-
-
+<h1 id="pipeline-structure">Pipeline structure<a class="headerlink" href="#pipeline-structure" title="Permanent link">&para;</a></h1>
+<div class="admonition clipboard-list">
+<p class="admonition-title">Objectives</p>
+<ul>
+<li>Learn about the structure of an nf-core pipeline.</li>
+</ul>
+</div>
+<h2 id="pipeline-structure_1">Pipeline structure<a class="headerlink" href="#pipeline-structure_1" title="Permanent link">&para;</a></h2>
+<p>nf-core pipelines follow a set of best practices and standardised conventions. nf-core pipelines start from a <strong>common template</strong> and follow the same structure. Although you won’t need to edit code in the pipeline project directory, having a basic understanding of the project structure and some core terminology will help you understand how to configure its execution.</p>
+<p>Nextflow DSL2 <span style="color:#087f5b;"><strong>workflow</strong></span> are built up of <span style="color:#c92a2a;"><strong>subworkflows</strong></span> and <span style="color:#364fc7;"><strong>modules</strong></span> that are stored as separate <code>.nf</code> files.</p>
+<p><br></p>
+<p align="left"><img src="../../images/1_3_structure.excalidraw.png" alt="drawing" width="400"/></p>
+<p><br></p>
+<p>Most nf-core pipelines consist of a single <span style="color:#087f5b;"><strong>workflow</strong></span> file (there are a few exceptions). This is the main <code>&lt;workflow&gt;.nf</code> file that is used to bring everything else together. Instead of having one large monolithic script, it is broken up into a combination of <span style="color:#c92a2a;"><strong>subworkflows</strong></span> and <span style="color:#364fc7;"><strong>modules</strong></span>.</p>
+<p><br></p>
+<p align="center"><img src="../../images/1_3_worksubmod.excalidraw.png" alt="drawing" width="900"/></p>
+<p><br></p>
+<p>A <span style="color:#c92a2a;"><strong>subworkflows</strong></span> is a groups of modules that are used in combination with each other and have a common purpose. For example, the <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/stats/main.nf"><code>SAMTOOLS_STATS</code></a>, <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/faidx/main.nf"><code>SAMTOOLS_IDXSTATS</code></a>, and <a href="https://github.com/nf-core/modules/blob/master/modules/nf-core/samtools/flagstat/main.nf"><code>SAMTOOLS_FLAGSTAT</code></a> modules are all included in the <a href="https://github.com/nf-core/modules/blob/master/subworkflows/nf-core/bam_stats_samtools/main.nf"><code>BAM_STATS_SAMTOOLS</code></a> subworkflow.</p>
+<p>Subworkflows improve pipeline readability and help with the reuse of modules within a pipeline. Within a nf-core pipeline, a subworkflow can be an nf-core subworkflow or as a local subworkflow. Like an nf-core pipeline, an nf-core subworkflow is developed by the community is shared in the <a href="https://github.com/nf-core/modules/tree/master/subworkflows/nf-core">nf-core subworkflows GitHub repository</a>. Local subworkflows are pipeline specific that are not shared in the nf-core subworkflows repository.</p>
+<p>A <span style="color:#364fc7;"><strong>modules</strong></span> is a wrapper for a process, the basic processing primitive to execute a user script. It can specify <a href="https://www.nextflow.io/docs/latest/process.html#directives">directives</a>, <a href="https://www.nextflow.io/docs/latest/process.html#inputs">inputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#outputs">outputs</a>, <a href="https://www.nextflow.io/docs/latest/process.html#when">when statements</a>, and a <a href="https://www.nextflow.io/docs/latest/process.html#script">script</a> block.</p>
+<p>Most modules will execute a single tool in the script block and will make use of the directives, inputs, outputs, and when statements dynamically. Like subworkflows, modules can also be developed and shared in the <a href="https://github.com/nf-core/modules/tree/master/modules/nf-core">nf-core modules GitHub repository</a> or stored as a local module. All modules from the nf-core repository are version controlled and tested to ensure reproducibility. Local modules are pipeline specific that are not shared in the nf-core modules repository.</p>
 
               
             </article>
@@ -416,6 +605,42 @@
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../1_introTo_nfCore/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction to nf-core" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Introduction to nf-core
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../3_sarekPipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: The Sarek pipeline" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              The Sarek pipeline
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
