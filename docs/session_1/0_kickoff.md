@@ -10,7 +10,7 @@ In session two we will introduce nf-core - a repository of existing pipelines th
 
 In the third and final session we will focus on that idea of customizing and configuring pipelines, as well as the metrics and shareable reports that you might generate during a workflow. 
 
-Generally speaking, this workshop is designed only as an introduction to Nextflow and aims to provide a persuasive argument for the use a workflow manager. This workshop *cannot* be exhaustive, so at the end of the workshop I propose the creation of Nextflow group either on slack or github. 
+Generally speaking, this workshop is designed only as an introduction to Nextflow and aims to provide a persuasive argument for the use of a workflow manager. This workshop *cannot* be exhaustive, so at the end of the workshop I propose the creation of Nextflow group either on slack or github. 
 
 Finally, we will end the workshop with a short, standalone session on github use. 
 
