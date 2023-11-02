@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>introtonextflow</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="1_introToNextflow_files/libs/clipboard/clipboard.min.js"></script>
+<script src="1_introToNextflow_files/libs/quarto-html/quarto.js"></script>
+<script src="1_introToNextflow_files/libs/quarto-html/popper.min.js"></script>
+<script src="1_introToNextflow_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="1_introToNextflow_files/libs/quarto-html/anchor.min.js"></script>
+<link href="1_introToNextflow_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="1_introToNextflow_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="1_introToNextflow_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="1_introToNextflow_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="1_introToNextflow_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="introduction-to-nextflow" class="level1">
+<h1>Introduction to Nextflow</h1>
+<p>!!! clipboard-list “Objectives”</p>
+<pre><code>- Learn about the core features of Nextflow
+- Learn Nextflow terminology
+- Learn fundamental commands and options for executing pipelines</code></pre>
+<section id="what-is-nextflow" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-nextflow">What is Nextflow?</h2>
+<p align="center">
+<img src="../../images/1_1_nextflow.png" alt="drawing" width="900">
+</p>
+<p>Nextflow is a <strong>workflow orchestration engine</strong> and domain-specific language (DSL) that makes it easy to write data-intensive computational pipelines.</p>
+<p>It is designed around the idea that the Linux platform is the lingua franca of data science. Linux provides many simple but powerful command-line and scripting tools that, when chained together, facilitate complex data manipulations.</p>
+<p>Nextflow extends this approach, adding the ability to define complex program interactions and a high-level parallel computational environment based on the dataflow programming model.</p>
+<p><strong>Nextflow’s core features are:</strong></p>
+<ul>
+<li>Pipeline portability and reproducibility</li>
+<li>Scalability of parallelization and deployment</li>
+<li>Integration of existing tools, systems, and industry standards</li>
+</ul>
+<p>Whether you are working with genomics data or other large and complex data sets, Nextflow can help you to streamline your pipeline and improve your productivity.</p>
+</section>
+<section id="processes-and-channels" class="level2">
+<h2 class="anchored" data-anchor-id="processes-and-channels">Processes and Channels</h2>
+<p>In Nextflow, <strong>processes</strong> and <strong>channels</strong> are the fundamental building blocks of a pipeline.</p>
+<br>
+<p align="center">
+<img src="/images/1_1_channel-process.excalidraw.png" alt="drawing" width="900">
+</p>
+<p><br></p>
+<p>A <strong>process</strong> is a unit of execution that represents a single computational step in a pipeline. It is defined as a block of code that typically performs one specific task. Each process will specify its input and outputs, as well as any directives and conditional statements required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, Perl, or R.</p>
+<p>Processes in are executed independently (i.e., they do not share a common writable state) as <strong>tasks</strong>. Multiple tasks can run in parallel, allowing for efficient utilization of computing resources. Nextflow is a top down pipeline manager and will automatically manage data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
+<p>A <strong>channel</strong> is an asynchronous first-in, first-out (FIFO) queue that is used to join processes together. Channels allow data to passed between processes and can be used to manage data, parallelize tasks, and structure pipelines. Any process can define one or more channels as an input and output. Ultimately the pipeline execution flow itself, is implicitly defined by the channel declarations.</p>
+<p>Importantly, processes can be <strong>parameterised</strong> to allow for flexibility in their behavior and to enable their reuse in and between pipelines. Parameters can be defined in the process declaration and can be passed to the process at runtime. Parameters can be used to specify the input and output files, as well as any other parameters required for the process to execute.</p>
+</section>
+<section id="execution-abstraction" class="level2">
+<h2 class="anchored" data-anchor-id="execution-abstraction">Execution abstraction</h2>
+<p>While a process defines what command or script is executed, the <strong>executor</strong> determines how and where the script is executed.</p>
+<p>Nextflow provides an <strong>abstraction</strong> between the pipeline’s functional logic and the underlying execution system. This abstraction allows users to define a pipeline once and execute it on different computing platforms without having to modify the pipeline definition.</p>
+<br>
+<p align="center">
+<img src="../../images/1_1_abstraction.excalidraw.png" alt="drawing" width="900">
+</p>
+<p><br></p>
+<p>If not specified, Nextflow will execute locally. Executing locally is useful for pipeline development and testing purposes. However, for real-world computational pipelines, a high-performance computing (HPC) or cloud platform is often required.</p>
+<p>Nextflow provides a variety of built-in execution options, such as local execution, HPC cluster execution, and cloud-based execution, and allows users to easily switch between these options using command-line arguments.</p>
+<p>You can find a full list of supported executors as well as how to configure them in the <a href="https://www.nextflow.io/docs/latest/executor.html">Nextflow docs</a>.</p>
+</section>
+<section id="nextflow-cli" class="level2">
+<h2 class="anchored" data-anchor-id="nextflow-cli">Nextflow CLI</h2>
+<p>Nextflow implements a declarative <strong>domain-specific language (DSL)</strong> that simplifies the writing of complex data analysis pipelines as an extension of a general-purpose programming language. As a concise DSL, Nextflow handles recurrent use cases while having the flexibility and power to handle corner cases.</p>
+<p>Nextflow is an extension of the Groovy programming language which, in turn, is a super-set of the Java programming language. Groovy can be thought of as “Python for Java” and simplifies the code.</p>
+<p>Nextflow provides a robust command line interface for the management and execution of pipelines. Nextflow can be used on any POSIX compatible system (Linux, OS X, etc). It requires Bash 3.2 (or later) and Java 11 (or later) to be installed.</p>
+<p>Nextflow is distributed as a self-installing package and does not require any special installation procedure.</p>
+<p>!!! info “How to install Nextflow locally”</p>
+<pre><code>1. Download the executable package using either `wget -qO- https://get.nextflow.io | bash` or `curl -s https://get.nextflow.io | bash`
+2. Make the binary executable on your system by running `chmod +x nextflow`
+3. Move the nextflow file to a directory accessible by your `$PATH` variable, e.g, `mv nextflow ~/bin/`</code></pre>
+</section>
+<section id="nextflow-options-and-commands" class="level2">
+<h2 class="anchored" data-anchor-id="nextflow-options-and-commands">Nextflow options and commands</h2>
+<p>Nextflow provides a robust command line interface for the management and execution of pipelines. The top-level interface consists of options and commands.</p>
+<p>You can list Nextflow options and commands with the <code>-h</code> option:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>```console title=“Output” Usage: nextflow [options] COMMAND [arg…]</p>
+<p>Options: -C Use the specified configuration file(s) overriding any defaults -D Set JVM properties -bg Execute nextflow in background -c, -config Add the specified file to configuration set -config-ignore-includes Disable the parsing of config includes -d, -dockerize Launch nextflow via Docker (experimental) [truncated]</p>
+<p>Commands: clean Clean up project cache and work directories clone Clone a project into a folder config Print a project configuration [truncated]</p>
+<pre><code>
+Options for a commands can also be viewed by appending the -help option to a Nextflow command.
+
+For example, options for the the run command can be viewed:
+
+```bash
+nextflow run -help</code></pre>
+<p><code>console title="Output" Execute a pipeline project Usage: run [options] Project name or repository url   Options:     -E        Exports all current system environment        Default: false     -ansi-log        Enable/disable ANSI console logging     -bucket-dir        Remote bucket where intermediate result files are stored     -cache        Enable/disable processes caching     -disable-jobs-cancellation        Prevent the cancellation of child jobs on execution termination     -dsl1        Execute the workflow using DSL1 syntax        Default: false     -dsl2        Execute the workflow using DSL2 syntax        Default: false     -dump-channels        Dump channels for debugging purpose     -dump-hashes        Dump task hash keys for debugging purpose        Default: false     [truncated]</code></p>
+<p>!!! question “Exercise”</p>
+<pre><code>Find out which version of Nextflow you are using.
+
+??? success "Solution"
+
+    You can find out which version of Nextflow you are using by executing:
+
+    ```bash
+    nextflow -version
+    ```
+
+    You should see the following:
+
+    ```console title="Output"
+    N E X T F L O W
+    version 23.04.4 build 5881
+    created 25-09-2023 15:34 UTC (26-09-2023 04:34 NZDT)
+    cite doi:10.1038/nbt.3820
+    http://nextflow.io
+    ```</code></pre>
+</section>
+<section id="managing-your-environment" class="level2">
+<h2 class="anchored" data-anchor-id="managing-your-environment">Managing your environment</h2>
+<p>You can use <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">environment variables</a> to control the Nextflow runtime and the underlying Java virtual machine. These variables can be exported before running a pipeline and will be interpreted by Nextflow.</p>
+<p>For most users, Nextflow will work without setting any environment variables. However, to improve reproducibility and to optimise your resources, you will benefit from establishing some of these.</p>
+<p>For example, for consistency, it is good practice to pin the version of Nextflow you are using with the <code>NXF_VER</code> variable:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_VER</span><span class="op">=&lt;</span>version number<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>!!! question “Exercise”</p>
+<pre><code>Change the version of Nextflow you are using to `23.04.0` by exporting an environmental variable:
+
+??? success "Solution"
+
+    Export the singularity cache using the `NXF_VER` environmental variable:
+
+    ```bash
+    export NXF_VER=23.04.0
+    ```
+
+    Check that the `NXF_VER` has been applied:
+
+    ```bash
+    nextflow -version
+    ```
+
+    You should see nextflow update and print the following:
+
+    ```console title="Output"
+    N E X T F L O W
+    version 23.04.0 build 5857
+    created 01-04-2023 21:09 UTC (02-04-2023 09:09 NZDT)
+    cite doi:10.1038/nbt.3820
+    http://nextflow.io
+    ```</code></pre>
+<p>!!! warning “Environmental variables on NeSI”</p>
+<pre><code>The behaviour of Nextflow environmental variables won't work as expected if using a NeSI Nextflow module.</code></pre>
+<p>Similarly, if you are using a shared resource, you may also consider including paths to where software is stored and can be accessed using the <code>NXF_SINGULARITY_CACHEDIR</code> or the <code>NXF_CONDA_CACHEDIR</code> variables:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NXF_SINGULARITY_CACHEDIR</span><span class="op">=&lt;</span>custom/path/to/conda/cache<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>!!! question “Exercise”</p>
+<pre><code>Export the folder `/nesi/nobackup/nesi02659/nextflow-workshop` as the folder where remote Singularity images are stored:
+
+??? success "Solution"
+
+    Export the singularity cache using the `NXF_SINGULARITY_CACHEDIR` environmental variable:
+
+    ```bash
+    export NXF_SINGULARITY_CACHEDIR=/nesi/nobackup/nesi02659/nextflow-workshop
+    ```
+
+    Check that the `NXF_SINGULARITY_CACHEDIR` has been exported:
+
+    ```bash
+    echo $NXF_SINGULARITY_CACHEDIR
+    ```</code></pre>
+<p>!!! tip “How to manage environmental variables”</p>
+<pre><code>You may want to include these, or other environmental variables, in your `.bashrc` file (or alternate) that is loaded when you log in so you don’t need to export variables every session.</code></pre>
+<p>A complete list of environmental variables can be found in the <a href="https://www.nextflow.io/docs/latest/config.html#environment-variables">Nextflow docs</a>.</p>
+</section>
+<section id="executing-a-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="executing-a-pipeline">Executing a pipeline</h2>
+<p>Nextflow seamlessly integrates with code repositories such as <a href="https://github.com/">GitHub</a>. This feature allows you to manage your project code and use public Nextflow pipelines quickly, consistently, and transparently.</p>
+<p>The Nextflow <code>pull</code> command will download a pipeline from a hosting platform into your global cache <code>$HOME/.nextflow/assets</code> folder.</p>
+<p>If you are pulling a project hosted in a remote code repository, you can specify its qualified name or the repository URL.</p>
+<p>The qualified name is formed by two parts - the owner name and the repository name separated by a <code>/</code> character. For example, if a Nextflow project <code>bar</code> is hosted in a GitHub repository <code>foo</code> at the address <code>http://github.com/foo/bar</code>, it could be pulled using:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or by using the complete URL:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull http://github.com/foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, the Nextflow <code>clone</code> command can be used to download a pipeline into a local directory of your choice:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> clone foo/bar <span class="op">&lt;</span>your/path<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The Nextflow <code>run</code> command is used to initiate the execution of a pipeline:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run foo/bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you <code>run</code> a pipeline, it will look for a local file with the pipeline name you’ve specified. If that file does not exist, it will look for a public repository with the same name on GitHub (unless otherwise specified). If it is found, Nextflow will automatically <code>pull</code> the pipeline to your global cache and execute it.</p>
+<p>!!! warning</p>
+<pre><code>Be aware of what is already in your current working directory where you launch your pipeline. If your current working directory contains nextflow configuration files you may encounter unexpected results.</code></pre>
+<p>!!! question “Exercise”</p>
+<pre><code>Execute the `hello` pipeline directly from `nextflow-io` [GitHub](https://github.com/nextflow-io/hello) repository.
+
+??? success "Solution"
+
+    Use the `run` command to execute the [nextflow-io/hello](https://github.com/nextflow-io/hello) pipeline:
+
+    ```bash
+    nextflow run nextflow-io/hello
+    ```
+
+    ```console title="Output"
+    N E X T F L O W  ~  version 23.04.0
+    Pulling nextflow-io/hello ...
+    downloaded from https://github.com/nextflow-io/hello.git
+    Launching `https://github.com/nextflow-io/hello` [silly_sax] DSL2 - revision: 1d71f857bb [master]
+    executor &gt;  local (4)
+    [e6/2132d2] process &gt; sayHello (3) [100%] 4 of 4 ✔
+    Hola world!
+
+    Bonjour world!
+
+    Ciao world!
+
+    Hello world!
+    ```</code></pre>
+<p>More information about the Nextflow <code>run</code> command can be found in the <a href="https://www.nextflow.io/docs/latest/cli.html#run">Nextflow docs</a>.</p>
+</section>
+<section id="executing-a-revision" class="level2">
+<h2 class="anchored" data-anchor-id="executing-a-revision">Executing a revision</h2>
+<p>When a Nextflow pipeline is created or updated using GitHub (or another code repository), a new revision is created. Each revision is identified by a unique number, which can be used to track changes made to the pipeline and to ensure that the same version of the pipeline is used consistently across different runs.</p>
+<p>The Nextflow <code>info</code> command can be used to view pipeline properties, such as the project name, repository, local path, main script, and revisions. The <code>*</code> indicates which revision of the pipeline you have stickied and will be executed when using the <code>run</code> command.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> info <span class="op">&lt;</span>pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is recommended that you use the revision flag every time you execute a pipeline to ensure that the version is correct.</p>
+<p>To use a specific revision, you simply need to add it to the command line with the <code>--revision</code> or <code>-r</code> flag. For example, to run a pipeline with the <code>v1.0</code> revision, you would use the following:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run <span class="op">&lt;</span>pipeline<span class="op">&gt;</span> -r v1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nextflow automatically provides built-in support for version control using Git. With this, users can easily manage and track changes made to a pipeline over time. A revision can be a git <code>branch</code>, <code>tag</code> or commit <code>SHA</code> number, and can be used interchangeably.</p>
+<p>!!! question “Exercise”</p>
+<pre><code>Execute the `hello` pipeline directly from the `nextflow-io` GitHub using the `v1.1` revision tag.
+
+??? success "Solution"
+
+    Use the `nextflow run` command to execute the `nextflow-io/hello` pipeline with the `v1.1` revision tag:
+
+    ```bash
+    nextflow run nextflow-io/hello -r v1.1
+    ```
+
+    ```console title="Output"
+    N E X T F L O W  ~  version 23.04.0
+    NOTE: Your local project version looks outdated - a different revision is available in the remote repository [3b355db864]
+    Nextflow DSL1 is no longer supported — Update your script to DSL2, or use Nextflow 22.10.x or earlier
+    ```
+
+    !!! warning "Warning"
+
+        The warning shown above is expected as the `v1.1` pipeline revision was written using an older version of Nextflow that uses the depreciated `echo` method.
+        
+        As both Nextflow and pipelines are updated independently over time, pipelines and Nextflow functions can get out of sync. While most nf-core pipelines are now `dsl2` (the current way of writing pipelines), some are still written in `dsl1` and may require older version of Nextflow.
+
+        You can use an older version of nextflow on the fly by adding adding the environmental variable to the start of the run command 
+        
+        ```bash
+        NXF_VER=22.10.0 nextflow run nextflow-io/hello -r v1.1
+        ```
+
+        ```console title="Output"
+        N E X T F L O W  ~  version 22.10.0
+        NOTE: Your local project version looks outdated - a different revision is available in the remote repository [3b355db864]
+        Launching `https://github.com/nextflow-io/hello` [amazing_lovelace] DSL1 - revision: baba3959d7 [v1.1]
+        WARN: The use of `echo` method has been deprecated
+        executor &gt;  local (4)
+        [e6/cfda06] process &gt; sayHello (4) [100%] 4 of 4 ✔
+        Bojour world! (version 1.1)
+
+        Hello world! (version 1.1)
+
+        Ciao world! (version 1.1)
+
+        Hola world! (version 1.1)
+        ```</code></pre>
+</section>
+<section id="nextflow-log" class="level2">
+<h2 class="anchored" data-anchor-id="nextflow-log">Nextflow log</h2>
+<p>It is important to keep a record of the commands you have run to generate your results. Nextflow helps with this by creating and storing metadata and logs about the run in hidden files and folders in your current directory (unless otherwise specified). This data can be used by Nextflow to generate reports. It can also be queried using the Nextflow <code>log</code> command:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>log</code> command has multiple options to facilitate the queries and is especially useful while debugging a pipeline and inspecting execution metadata. You can view all of the possible <code>log</code> options with <code>-h</code> flag:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To query a specific execution you can use the <code>RUN NAME</code> or a <code>SESSION ID</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="op">&lt;</span>run name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To get more information, you can use the <code>-f</code> option with named fields. For example:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="op">&lt;</span>run name<span class="op">&gt;</span> -f process,hash,duration</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are many other fields you can query. You can view a full list of fields with the <code>-l</code> option:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> log <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>!!! question “Exercise”</p>
+<pre><code>Use the `log` command to view with `process`, `hash`, and `script` fields for your tasks from your most recent Nextflow execution.
+
+??? success "Solution"
+
+    Use the `log` command to get a list of you recent executions:
+
+    ```bash
+    nextflow log
+    ```
+
+    ```console title="Output"
+    TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND                       
+    2023-08-29 07:33:48     3.6s            stupefied_bernard       OK      1d71f857bb      f9e18b71-d689-4589-be34-8cd98c1aab2e    nextflow run nextflow-io/hello
+    ```
+
+    Query the process, hash, and script using the `-f` option for the most recent run:
+
+    ```bash
+    nextflow log stupefied_bernard -f process,hash,script
+    ```
+
+    ```console title="Output"
+    sayHello        f3/8f827f
+        echo 'Hola world!'
+        
+    sayHello        b8/b66545
+        echo 'Ciao world!'
+        
+    sayHello        3c/498a68
+        echo 'Bonjour world!'
+        
+    sayHello        6e/8d5b1a
+        echo 'Hello world!'
+    ```</code></pre>
+</section>
+<section id="execution-cache-and-resume" class="level2">
+<h2 class="anchored" data-anchor-id="execution-cache-and-resume">Execution cache and resume</h2>
+<p>Task execution <strong>caching</strong> is an essential feature of modern pipeline managers. Accordingly, Nextflow provides an automated caching mechanism for every execution.</p>
+<p>When using the Nextflow <code>-resume</code> option, successfully completed tasks from previous executions are skipped and the previously cached results are used in downstream tasks.</p>
+<p>Nextflow caching mechanism works by assigning a unique ID to each task. The task unique ID is generated as a 128-bit hash value composing the the complete file path, file size, and last modified timestamp. These ID’s are used to create a separate execution directory where the tasks are executed and the outputs are stored. Nextflow will take care of the inputs and outputs in these folders for you.</p>
+<p>A multi-step pipeline is required to demonstrate cache and resume. The <a href="https://github.com/christopher-hakkaart/nf-core-demo/tree/master"><code>christopher-hakkaart/nf-core-demo</code></a> pipeline was created with the nf-core <code>create</code> command and has the same structure as nf-core pipelines. It is a toy example with 3 processes:</p>
+<ol type="1">
+<li><a href="https://github.com/christopher-hakkaart/nf-core-demo/blob/master/modules/local/samplesheet_check.nf"><code>SAMPLESHEET_CHECK</code></a>
+<ul>
+<li>Executes a custom python script to check the input <a href="https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv">sample sheet</a> is valid.</li>
+</ul></li>
+<li><a href="https://github.com/christopher-hakkaart/nf-core-demo/blob/master/modules/nf-core/fastqc/main.nf"><code>FASTQC</code></a>
+<ul>
+<li>Executes <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> using the <code>.fastq.gz</code> files from the <a href="https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv">sample sheet</a> as inputs.</li>
+</ul></li>
+<li><a href="https://github.com/christopher-hakkaart/nf-core-demo/blob/master/modules/nf-core/multiqc/main.nf"><code>MULTIQC</code></a>
+<ul>
+<li>Executes <a href="https://multiqc.info/">MultiQC</a> using the FastQC reports generated by the <code>FASTQC</code> process.</li>
+</ul></li>
+</ol>
+<p>The <a href="https://github.com/christopher-hakkaart/nf-core-demo/tree/master"><code>christopher-hakkaartnf-core-demo</code></a> is a very small nf-core pipeline. It uses real data and bioinformatics software and requires additional configuration to run successfully.</p>
+<p>To run this example you will need to include two profiles in your execution command. Profiles are sets of configuration options that can be accessed by Nextflow. Profiles will be explained in greater detail during the <a href="../session_1/3_configuration.md">configuring nf-core pipelines</a> section of the workshop.</p>
+<p>To run this pipeline, both the <code>test</code> profile and a software management profile (such as <code>singularity</code>) are required:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run christopher-hakkaart/nf-core-demo <span class="at">-profile</span> test,singularity <span class="at">-r</span> main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>??? warning “This run requires 6GB of memory”</p>
+<pre><code>If your session was spawned with less than 8GB of memory, above run will fail with the following error 
+```
+Caused by:
+Process requirement exceeds available memory -- req: 6 GB; avail: 4 GB
+```</code></pre>
+<p>The command line output will print something like this:</p>
+<p>``<code>console title="Output" N E X T F L O W  ~  version 23.04.0 Launching</code>https://github.com/christopher-hakkaart/nf-core-demo` [voluminous_kay] DSL2 - revision: 17521af3a8 [main]</p>
+<table class="table">
+<colgroup>
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">,–./,-. ___ __ __ __ ___ /,-._.–~’ |&nbsp;| |__ __ / <code>/  \ |__) |__         }  { | \| |       \__, \__/ |  \ |___     \</code>-._,-<code>-,</code>._,._,’ nf-core/demo v1.0dev-g17521af</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Core Nextflow options revision : main runName : voluminous_kay containerEngine : singularity launchDir : /scale_wlg_persistent/filesets/home/chrishakk/session1 workDir : /scale_wlg_persistent/filesets/home/chrishakk/session1/work projectDir : /home/chrishakk/.nextflow/assets/christopher-hakkaart/nf-core-demo userName : chrishakk profile : test,singularity configFiles : /home/chrishakk/.nextflow/assets/christopher-hakkaart/nf-core-demo/nextflow.config</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Input/output options input : https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv outdir : results</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Reference genome options genome : R64-1-1 fasta : s3://ngi-igenomes/igenomes/Saccharomyces_cerevisiae/Ensembl/R64-1-1/Sequence/WholeGenomeFasta/genome.fa</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Institutional config options config_profile_name : Test profile config_profile_description: Minimal test dataset to check pipeline function</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Max job request options max_cpus : 2 max_memory : 6.GB max_time : 6.h</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Generic options tracedir : null/pipeline_info</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">!! Only displaying parameters that differ from the pipeline defaults !!</td>
+</tr>
+</tbody>
+</table>
+<p>If you use nf-core/demo for your analysis please cite:</p>
+<ul>
+<li><p>The nf-core framework https://doi.org/10.1038/s41587-020-0439-x</p></li>
+<li><p>Software dependencies https://github.com/nf-core/demo/blob/master/CITATIONS.md —————————————————— Downloading plugin nf-amazon@1.16.1 [f2/e5eb26] process &gt; NFCORE_DEMO:DEMO:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet_test_illumina_amplicon.csv) [100%] 1 of 1 ✔ [bb/f98425] process &gt; NFCORE_DEMO:DEMO:FASTQC (SAMPLE1_PE_T1) [100%] 4 of 4 ✔ [dd/728742] process &gt; NFCORE_DEMO:DEMO:MULTIQC [100%] 1 of 1 ✔</p></li>
+<li><p>Completed at: 29-Sep-2023 22:16:49 Duration : 2m 27s CPU hours : (a few seconds) Succeeded : 6</p></li>
+</ul>
+<pre><code>
+Executing this pipeline will create a `work` directory and a `results` directory with selected results files.
+
+In the output above, the hexadecimal numbers, such as `bb/f98425`, identify the unique task execution. These numbers are also the prefix of the `work` directories where each task is executed.
+
+You can inspect the files produced by a task by looking inside the `work` directory and using these numbers to find the task-specific execution path:
+
+The files that have been selected for publication in the `results` folder can also be explored:
+
+```bash
+ls results</code></pre>
+<p>If you look inside the <code>work</code> directory of a <code>FASTQC</code> task, you will find the files that were staged and created when this task was executed:</p>
+<p>The <code>FASTQC</code> process runs four times, executing in a different work directories for each set of inputs. Therefore, in the previous example, the work directory [bb/f98425] represents just one of the four sets of input data that was processed.</p>
+<p>To print all the relevant paths to the screen, use the <code>-ansi-log</code> option can be used when executing your pipeline:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run christopher-hakkaart/nf-core-demo <span class="at">-profile</span> test,singularity <span class="at">-r</span> main <span class="at">-ansi-log</span> false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It’s very likely you will execute a pipeline multiple times as you find the parameters that best suit your data. You can save a lot of spaces (and time) if you <strong>resume</strong> a pipeline from the last step that was completed successfully or unmodified.</p>
+<p>By adding the <code>-resume</code> option to your <code>run</code> command you can use the cache rather than re-running successful tasks:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run christopher-hakkaart/nf-core-demo <span class="at">-profile</span> test,singularity <span class="at">-r</span> main <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you <code>run</code> the <code>christopher-hakkaart/nf-core-deme</code> pipeline again without making any changes you will see that the cache is used:</p>
+<p><code>console title="Output" [truncated] [5f/07e477] process &gt; NFCORE_DEMO:DEMO:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet_test_illumina_amplicon.csv) [100%] 1 of 1, cached: 1 ✔ [b2/873706] process &gt; NFCORE_DEMO:DEMO:FASTQC (SAMPLE2_PE_T1)                                                 [100%] 4 of 4, cached: 4 ✔ [ca/e8e0a8] process &gt; NFCORE_DEMO:DEMO:MULTIQC                                                                [100%] 1 of 1, cached: 1 ✔ [truncated]</code></p>
+<p>In practical terms, the pipeline is executed from the beginning. However, before launching the execution of a process, Nextflow uses the task unique ID to check if the work directory already exists and that it contains a valid command exit state with the expected output files. If this condition is satisfied, the task execution is skipped and previously computed results are used as the process results.</p>
+<p>Notably, the <code>-resume</code> functionality is very sensitive. Even touching a file in the work directory can invalidate the cache.</p>
+<p>!!! question “Exercise”</p>
+<pre><code>Invalidate the cache by touching a `.fastq.gz` file in a `FASTQC` task work directory (you can use the `touch` command). Execute the pipeline again with the `-resume` option to show that the cache has been invalidated.
+
+??? success "Solution"
+
+    Execute the pipeline for the first time (if you have not already).
+
+    ```bash
+    nextflow run christopher-hakkaart/nf-core-demo -profile test,singularity -r main
+    ```
+
+    Use the task ID shown for the `FASTQC` process and use it to find and `touch` the `sample1_R1.fastq.gz` file:
+
+    ```bash
+    touch work/b2/87370687cc7cdec037ce4f36807d32/sample1_R1.fastq.gz
+    ```
+
+    Execute the pipeline again with the `-resume` command option:
+
+    ```bash
+    nextflow run christopher-hakkaart/nf-core-demo -profile test,singularity -r main -resume
+    ```
+
+    You should that 2 of 4 tasks for `FASTQC` and the `MULTIQC` task were invalid and were executed again.
+
+    **Why did this happen?**
+
+    In this example, the cache of two `FASTQC` tasks were invalid. The `sample1_R1.fastq.gz` file is used by in the [samplesheet](https://raw.githubusercontent.com/nf-core/test-datasets/viralrecon/samplesheet/samplesheet_test_illumina_amplicon.csv) twice. Thus, touching the symlink for this file and changing the date of last modification disrupted two task executions.</code></pre>
+<p>Your work directory can get very big very quickly (especially if you are using full sized datasets). It is good practise to <code>clean</code> your work directory regularly. Rather than removing the <code>work</code> folder with all of it’s contents, the Nextflow <code>clean</code> function allows you to selectively remove data associated with specific runs.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> clean <span class="at">-help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-after</code>, <code>-before</code>, and <code>-but</code> options are all very useful to select specific runs to <code>clean</code>. The <code>-dry-run</code> option is also very useful to see which files will be removed if you were to <code>-force</code> the <code>clean</code> command.</p>
+<p>!!! question “Exercise”</p>
+<pre><code>You Nextflow to `clean` your work `work` directory of staged files but **keep** your execution logs.
+
+??? success "Solution"
+
+    Use the Nextflow `clean` command with the `-k` and `-f` options:
+
+    ```bash
+    nextflow clean -k -f
+    ```</code></pre>
+</section>
+<section id="listing-and-dropping-cached-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="listing-and-dropping-cached-pipelines">Listing and dropping cached pipelines</h2>
+<p>Over time, you might want to remove a stored pipelines. Nextflow also has functionality to help you to view and remove pipelines that have been pulled locally.</p>
+<p>The Nextflow <code>list</code> command prints the projects stored in your global cache folder (<code>$HOME/.nextflow/assets</code>). These are the pipelines that were pulled when you executed either of the Nextflow <code>pull</code> or <code>run</code> commands:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want to remove a pipeline from your cache you can remove it using the Nextflow <code>drop</code> command:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> drop <span class="op">&lt;</span> pipeline<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>!!! question “Exercise”</p>
+<pre><code>View your cached pipelines with the Nextflow `list` command and remove the `nextflow-io/hello` pipeline with the `drop` command.
+
+??? success "Solution"
+
+    List your pipeline assets:
+
+    ```bash
+    nextflow list
+    ```
+
+    Drop the `nextflow-io/hello` pipeline:
+
+    ```bash
+    nextflow drop nextflow-io/hello
+    ```
+
+    Check it has been removed:
+
+    ```bash
+    nextflow list
+    ```</code></pre>
+<p><br> !!! circle-info “”</p>
+<p>!!! cboard-list-2 “Key points”</p>
+<pre><code>- Nextflow is a pipeline orchestration engine and domain-specific language (DSL) that makes it easy to write data-intensive computational pipelines
+- Environment variables can be used to control your Nextflow runtime and the underlying Java virtual machine
+- Nextflow supports version control and has automatic integrations with online code repositories.
+- Nextflow will cache your runs and they can be resumed with the `-resume` option
+- You can manage pipelines with Nextflow commands (e.g., `pull`, `clone`, `list`, and `drop`)</code></pre>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
