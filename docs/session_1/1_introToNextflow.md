@@ -29,7 +29,7 @@ Whether you are working with genomics data or other large and complex data sets,
 In Nextflow, **processes** and **channels** are the fundamental building blocks of a pipeline.
 
 <br>
-<p align="center"><img src="/docs/images/1_1_channel-process.excalidraw.png" alt="drawing" width="900"/></p> 
+<p align="center"><img src="../../images/1_1_channel-process.excalidraw.png" alt="drawing" width="900"/></p> 
 <br>
 
 A **process** is a unit of execution that represents a single computational step in a pipeline. It is defined as a block of code that typically performs one specific task. Each process will specify its input and outputs, as well as any directives and conditional statements required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, Perl, or R.
