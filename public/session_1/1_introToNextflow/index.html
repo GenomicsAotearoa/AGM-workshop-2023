@@ -812,7 +812,7 @@
 <h2 id="processes-and-channels">Processes and Channels<a class="headerlink" href="#processes-and-channels" title="Permanent link">&para;</a></h2>
 <p>In Nextflow, <strong>processes</strong> and <strong>channels</strong> are the fundamental building blocks of a pipeline.</p>
 <p><br></p>
-<p align="center"><img src="/docs/images/1_1_channel-process.excalidraw.png" alt="drawing" width="900"/></p>
+<p align="center"><img src="../../images/1_1_channel-process.excalidraw.png" alt="drawing" width="900"/></p>
 <p><br></p>
 <p>A <strong>process</strong> is a unit of execution that represents a single computational step in a pipeline. It is defined as a block of code that typically performs one specific task. Each process will specify its input and outputs, as well as any directives and conditional statements required for its execution. Processes can be written in any language that can be executed from the command line, such as Bash, Python, Perl, or R.</p>
 <p>Processes in are executed independently (i.e., they do not share a common writable state) as <strong>tasks</strong>. Multiple tasks can run in parallel, allowing for efficient utilization of computing resources. Nextflow is a top down pipeline manager and will automatically manage data dependencies between processes, ensuring that each process is executed only when its input data is available and all of its dependencies have been satisfied.</p>
