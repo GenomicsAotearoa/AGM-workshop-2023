@@ -20,7 +20,7 @@ nav:
     - session_2/1_introTo_nfCore.md
     - session_2/2_pipelineStructure.md
     - session_2/3_sarekPipeline.md
-    - session_2/4_customization.md
+    - session_2/4_runConfiguration.md
   - Session 3:
     - session_3/0_homeStretchOverview.md
     - session_3/1_configFiles.md

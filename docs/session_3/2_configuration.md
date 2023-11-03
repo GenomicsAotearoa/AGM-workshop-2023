@@ -1,3 +1,5 @@
+# Finishing touches
+
 ## Customizing parameters
 
 Let's take the skills from the previous section and apply them to customise the execution of the Sarek pipeline.
