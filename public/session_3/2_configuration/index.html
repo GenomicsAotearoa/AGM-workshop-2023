@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#customizing-parameters" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -456,8 +461,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../session_2/4_customization/" class="md-nav__link">
-        Customization: Configuring your run
+      <a href="../../session_2/4_customization.md" class="md-nav__link">
+        None
       </a>
     </li>
   
@@ -509,7 +514,7 @@
   
     <li class="md-nav__item">
       <a href="../0_homeStretchOverview/" class="md-nav__link">
-        0 homeStretchOverview
+        Configurations and customization
       </a>
     </li>
   
@@ -523,7 +528,7 @@
   
     <li class="md-nav__item">
       <a href="../1_configFiles/" class="md-nav__link">
-        Configuring continued
+        Configuration basics
       </a>
     </li>
   
@@ -543,9 +548,52 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2 configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         2 configuration
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-parameters" class="md-nav__link">
+    Customizing parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    Configuration files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-and-reports" class="md-nav__link">
+    Metrics and reports
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -576,6 +624,35 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-parameters" class="md-nav__link">
+    Customizing parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    Configuration files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-and-reports" class="md-nav__link">
+    Metrics and reports
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -594,7 +671,184 @@
 
   <h1>2 configuration</h1>
 
-
+<h2 id="customizing-parameters">Customizing parameters<a class="headerlink" href="#customizing-parameters" title="Permanent link">&para;</a></h2>
+<p>Let's take the skills from the previous section and apply them to customise the execution of the Sarek pipeline.</p>
+<p>Remember that previoiusly we supplied a series of Sarek pipeline parameters as flags in your run command (<code>--</code>). Here, we will package these into a <code>.json</code> file and use the <code>-params-file</code> option.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Package the parameters from the previous lesson into a <code>.json</code> file and run the pipeline using the <code>-params-file</code> option:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="go">nextflow run nf-core/sarek \</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="go">    --input samplesheet.csv \</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="go">    --igenomes_ignore \</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="go">    --dbsnp &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot; \</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="go">    --fasta &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot; \</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="go">    --germline_resource &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot; \</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="go">    --intervals &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot; \</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="go">    --known_indels &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot; \</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="go">    --snpeff_db 105 \</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="go">    --snpeff_genome &quot;WBcel235&quot; \</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="go">    --snpeff_version &quot;5.1&quot; \</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="go">    --tools &quot;freebayes&quot; \</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="go">    --vep_cache_version &quot;106&quot; \</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="go">    --vep_genome &quot;WBcel235&quot; \</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="go">    --vep_species &quot;caenorhabditis_elegans&quot; \</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="go">    --vep_version &quot;106.1&quot; \</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="go">    --max_cpus 4 \</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="go">    --max_memory 6.5GB \</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="go">    --output &quot;my_results&quot;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="go">    -profile singularity \</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="go">    -r 3.2.3</span>
+</code></pre></div>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><span class="filename">my-params.json</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">&quot;igenomes_ignore&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;dbsnp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;fasta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">&quot;germline_resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;intervals&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">&quot;known_indels&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">&quot;snpeff_db&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">105</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nt">&quot;snpeff_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">&quot;snpeff_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5.1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;freebayes&quot;</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="nt">&quot;vep_cache_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">106</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">&quot;vep_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nt">&quot;vep_species&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;caenorhabditis_elegans&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="nt">&quot;vep_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;106.1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="nt">&quot;max_cpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="nt">&quot;max_memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6.5 GB&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="nt">&quot;outdir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_results_2&quot;</span><span class="w"></span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>Your execution command will now look like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3
+</code></pre></div>
+<p>Note that in this example we kept <code>--input samplesheet.csv</code> in the execution command. However, this could have put this in the <code>.json</code> file. You can pick and choose which parameters go in a params file and which parameters go in your execution command.</p>
+</details>
+</div>
+<p>Due to the order of priority, you can modify parameters you want to change without having to edit your newly created parameters file.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Include both <code>freebayes</code> and <code>strelka</code> as variant callers using the <code>tools</code> parameter and run the pipeline again.</p>
+<p>For this option, you will need to use the <code>--tools</code> flag and include both variant callers in the same string separated by a comma, e.g., <code>--tools "&lt;tool1&gt;,&lt;tool2&gt;"</code></p>
+<p>You can also use <code>-resume</code> to resume the pipeline from the last successful step.</p>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3 --tools <span class="s2">&quot;freebayes,strelka&quot;</span> -resume 
+</code></pre></div>
+</details>
+</div>
+<h2 id="configuration-files">Configuration files<a class="headerlink" href="#configuration-files" title="Permanent link">&para;</a></h2>
+<p>Sometimes Sarek won't have a parameter that you need to customize the execution of a tool. In this situation, you will need to apply a configuration file to the pipeline.</p>
+<p>As shown in the example from <a href="../session_1/3_configuration.md">Session 1</a>, you can selectively apply a configuration file to a process using the <code>withName</code> directive.</p>
+<div class="admonition tip">
+<p class="admonition-title">Be specific with your selector</p>
+<p>Remember to make your selector specific to the process you are trying to customise. It can be helpful to use the same selectors that are already included in the configuration file.</p>
+</div>
+<p>Sarek is a little different from other pipelines because it has multiple different config files that are used for different tools or groups of tools. This is stylistic and helps to keep the config files organised.</p>
+<p>For example, there are a number of options that are applied when calling variants with <code>FREEBAYES</code> and are all stored in a <a href="https://github.com/nf-core/sarek/blob/3.2.3/conf/modules/freebayes.config">freebayes.config</a> file together:</p>
+<div class="highlight"><span class="filename">freebayes.config</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="go">process {</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">    withName: &#39;MERGE_FREEBAYES&#39; {</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">        ext.prefix       = { &quot;${meta.id}.freebayes&quot; }</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">        publishDir       = [</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">            mode: params.publish_dir_mode,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="go">            path: { &quot;${params.outdir}/variant_calling/freebayes/${meta.id}/&quot; },</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">            saveAs: { filename -&gt; filename.equals(&#39;versions.yml&#39;) ? null : filename }</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">        ]</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">    }</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">    withName: &#39;FREEBAYES&#39; {</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="go">        ext.args         = &#39;--min-alternate-fraction 0.1 --min-mapping-quality 1&#39;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="go">        //To make sure no naming conflicts ensure with module BCFTOOLS_SORT &amp; the naming being correct in the output folder</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="go">        ext.prefix       = { meta.num_intervals &lt;= 1 ? &quot;${meta.id}&quot; : &quot;${meta.id}.${target_bed.simpleName}&quot; }</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="go">        ext.when         = { params.tools &amp;&amp; params.tools.split(&#39;,&#39;).contains(&#39;freebayes&#39;) }</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="go">        publishDir       = [</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="go">            enabled: false</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="go">        ]</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="go">    }</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="go">    withName: &#39;BCFTOOLS_SORT&#39; {</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="go">        ext.prefix       = { meta.num_intervals &lt;= 1 ? meta.id + &quot;.freebayes&quot; : vcf.name - &quot;.vcf&quot; + &quot;.sort&quot; }</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="go">        publishDir       = [</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="go">            mode: params.publish_dir_mode,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="go">            path: { &quot;${params.outdir}/variant_calling/&quot; },</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="go">            pattern: &quot;*vcf.gz&quot;,</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="go">            saveAs: { meta.num_intervals &gt; 1 ? null : &quot;freebayes/${meta.id}/${it}&quot; }</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="go">        ]</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="go">    }</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="go">    withName : &#39;TABIX_VC_FREEBAYES&#39; {</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="go">        publishDir       = [</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="go">            mode: params.publish_dir_mode,</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="go">            path: { &quot;${params.outdir}/variant_calling/freebayes/${meta.id}/&quot; },</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="go">            saveAs: { filename -&gt; filename.equals(&#39;versions.yml&#39;) ? null : filename }</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="go">        ]</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="go">    }</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="go">    // PAIR_VARIANT_CALLING</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="go">    if (params.tools &amp;&amp; params.tools.split(&#39;,&#39;).contains(&#39;freebayes&#39;)) {</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="go">        withName: &#39;.*:BAM_VARIANT_CALLING_SOMATIC_ALL:BAM_VARIANT_CALLING_FREEBAYES:FREEBAYES&#39; {</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="go">            ext.args       = &quot;--pooled-continuous \</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="go">                            --pooled-discrete \</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="go">                            --genotype-qualities \</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="go">                            --report-genotype-likelihood-max \</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="go">                            --allele-balance-priors-off \</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="go">                            --min-alternate-fraction 0.03 \</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="go">                            --min-repeat-entropy 1 \</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="go">                            --min-alternate-count 2 &quot;</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="go">        }</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="go">    }</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="go">}</span>
+</code></pre></div>
+<p>Each of these can be modified independently of the others and be applied using a custom configuration file.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Create a custom configuration file that will modify the <code>--min-alternate-fraction</code> parameter for <code>FREEBAYES</code> to <code>0.05</code> and apply it to the pipeline.</p>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3 --tools <span class="s2">&quot;freebayes,strelka&quot;</span> -resume -c my-config.config
+</code></pre></div>
+<div class="highlight"><span class="filename">my-config.config</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="go">process {</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="go">    withName: &#39;FREEBAYES&#39; {</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="go">        ext.args         = &#39;--min-alternate-fraction 0.05&#39;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="go">    }</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="go">}</span>
+</code></pre></div>
+</details>
+</div>
+<h2 id="metrics-and-reports">Metrics and reports<a class="headerlink" href="#metrics-and-reports" title="Permanent link">&para;</a></h2>
+<p>Nextflow can also produce multiple reports and charts that show several runtime metrics and your execution information. You can enable this functionality by adding Nextflow options to your run command:</p>
+<ul>
+<li>Adding <code>-with-report</code> to your run command will create a HTML execution report which includes many useful metrics about a pipeline execution. </li>
+<li>Adding <code>-with-trace</code> option to creates an execution tracing file that contains some useful information about each process executed in your pipeline script.</li>
+<li>Adding <code>-with-timeline</code> to your run command enables the creation of the pipeline timeline report showing how processes were executed over time.</li>
+<li>Adding <code>-with-dag</code> to your run command enables the rendering of the pipeline execution direct acyclic graph representation.<ul>
+<li>This feature requires the installation of <a href="https://graphviz.org/">Graphviz</a> on your computer. Beginning in version 22.04, Nextflow can render the DAG as a Mermaid diagram. Mermaid diagrams are particularly useful because they can be embedded in GitHub Flavored Markdown without having to render them yourself.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition square-pen">
+<p class="admonition-title">Note</p>
+<p>The execution report (<code>-with-report</code>), trace report (<code>-with-trace</code>), timeline trace (<code>-with-timeline</code>), and dag (<code>-with-dag</code>) must be specified when the pipeline is executed. By contrast, the <code>log</code> option is useful after a pipeline has already run and is available for every executed pipeline.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Try to run the following command and view the reports generated by Nextflow:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3 --tools <span class="s2">&quot;freebayes,strelka&quot;</span> -with-report -with-trace -with-timeline -with-dag -resume
+</code></pre></div>
+</div>
+<p><br></p>
+<div class="admonition circle-info"></div>
+<div class="admonition cboard-list-2">
+<p class="admonition-title">Key points</p>
+<ul>
+<li>Parameters go in parameters files and everything else goes in a configuration file</li>
+<li>There are additional flags you can use to generate reports and metric for you own records</li>
+</ul>
+</div>
 
               
             </article>
@@ -615,7 +869,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../1_configFiles/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuring continued" rel="prev">
+        <a href="../1_configFiles/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration basics" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -624,7 +878,7 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Configuring continued
+              Configuration basics
             </div>
           </div>
         </a>

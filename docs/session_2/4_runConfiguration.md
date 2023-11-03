@@ -1,4 +1,4 @@
-# Customization: Configuring your run
+# Configuring your run
 
 !!! clipboard-list "Objectives"
 
