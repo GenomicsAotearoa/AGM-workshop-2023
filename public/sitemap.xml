@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_1/0_kickoff/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_1/1_introToNextflow/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_2/0_sessionOverview/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_2/1_introTo_nfCore/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_2/2_pipelineStructure/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_2/3_sarekPipeline/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_2/4_customization/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_3/0_homeStretchOverview/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_3/1_configFiles/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/session_3/2_configuration/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://genomicsaotearoa.github.io/AGM-workshop-2023/setup/setup/</loc>
-         <lastmod>2023-11-02</lastmod>
+         <lastmod>2023-11-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
