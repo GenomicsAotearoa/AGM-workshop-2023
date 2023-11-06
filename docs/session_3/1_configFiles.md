@@ -1,6 +1,6 @@
 # Configuration basics
 
-# Configuring nf-core pipelines
+## Configuring nf-core pipelines
 
 !!! clipboard-list "Objectives"
 
@@ -33,11 +33,11 @@ Notably, while some of these files are already included in the nf-core pipeline 
 
 Understanding how and when these files are interpreted by Nextflow is critical for the accurate configuration of a pipelines execution.
 
-### Parameters
+## Parameters
 
 **Parameters** are pipeline specific settings that can be used to customise the execution of a pipeline. 
 
-Every nf-core pipeline has a full list of parameters on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will have additional text to help you understand when and how a parameter should be used.
+Every nf-core pipeline has a [full list of parameters](https://nf-co.re/sarek/3.2.3/parameters) on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will have additional text to help you understand when and how a parameter should be used.
 
 Parameters and their descriptions can also be viewed in the command line using the `run` command with the `--help` parameter:
 
@@ -168,7 +168,7 @@ Nextflow will also look for files that are external to the pipeline project dire
 
 You don't need to use all of these files to execute your pipeline.
 
-**Parameter files**
+** Parameter files
 
 Parameter files are `.json` files that can contain an unlimited number of parameters:
 
