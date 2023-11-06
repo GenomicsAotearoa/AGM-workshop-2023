@@ -150,11 +150,6 @@ nf-core pipelines are required to define **software containers** and **conda env
     
     The `test` data profile will pull small test files directly from the `nf-core/test-data` GitHub repository and run it on your local system. The `test` profile is an important control to check the pipeline is working as expected and is a great way to trial a pipeline. Some pipelines have multiple test `profiles` for you to try.
 
-### Shared configuration files
-
-An `includeConfig` statement in the `nextflow.config` file is also used to include custom institutional profiles that have been submitted to the nf-core [config repository](https://github.com/nf-core/configs). At run time, nf-core pipelines will fetch these configuration profiles from the [nf-core config repository](https://github.com/nf-core/configs) and make them available.
-
-For shared resources such as an HPC cluster, you may consider developing a shared institutional profile. You can follow [this tutorial](https://nf-co.re/docs/usage/tutorials/step_by_step_institutional_profile) for more help.
 
 ### Custom configuration files
 
@@ -186,208 +181,88 @@ You can override default parameters by creating a custom `.json` file and passin
 nextflow run nf-core/<workflow> -profile test,singularity -r main -param-file <path/to/params.json>
 ```
 
-!!! question "Exercise"
+## Customizing parameters
 
-    Give the MultiQC report for the `christopher-hakkaart/nf-core-demo` pipeline the name of your **favorite food** using the [`multiqc_title`](https://github.com/christopher-hakkaart/nf-core-demo/blob/master/nextflow.config#L27) parameter in a parameters file:
+Let's take the skills from the previous section and apply them to customise the execution of the Sarek pipeline.
 
-    ??? success "Solution"
-
-        Create a custom `.json` file that contains your favourite food, e.g., cheese:
-
-        ```json title="my-custom-params.json"
-        {
-        "multiqc_title": "cheese"
-        }
-        ```
-
-        Include the custom `.json` file in your execution command with the `-params-file` option:
-
-        ```bash
-        nextflow run christopher-hakkaart/nf-core-demo -profile test,singularity -r main -params-file my_custom_params.json 
-        ```
-
-        Check that it has been applied:
-
-        ```bash
-        ls results/multiqc/
-        ```
-
-**Configuration files**
-
-Configuration files are `.config` files that can contain various pipeline properties. Custom paths passed in the command-line using the `-c` option:
-
-```bash
-nextflow run nf-core/<workflow> -profile test,singularity -c <path/to/custom.config>
-```
-
-Multiple custom `.config` files can be included at execution by separating them with a comma (`,`).
-
-Custom configuration files follow the same structure as the configuration file included in the pipeline directory.
-
-Configuration properties are organised into [scopes](https://www.nextflow.io/docs/latest/config.html#config-scopes) by dot prefixing the property names with a scope identifier or grouping the properties in the same scope using the curly brackets notation. For example:
-
-```console title="custom.config"
-alpha.x  = 1
-alpha.y  = 'string value'
-```
-
-Is equivalent to:
-
-```console title="custom.config"
-alpha {
-     x = 1
-     y = 'string value'
-}
-```
-
-Scopes allow you to quickly configure settings required to deploy a pipeline on different infrastructure using different software management. For example, the `executor` scope can be used to provide settings for the deployment of a pipeline on a HPC cluster. Similarly, the `singularity` scope controls how Singularity containers are executed by Nextflow.
-
-Multiple scopes can be included in the same `.config` file using a mix of dot prefixes and curly brackets. A full list of scopes is described in detail [here](https://www.nextflow.io/docs/latest/config.html#config-scopes).
+Remember that previoiusly we supplied a series of Sarek pipeline parameters as flags in your run command (`--`). Here, we will package these into a `.json` file and use the `-params-file` option.
 
 !!! question "Exercise"
 
-    Give the MultiQC report for the `christopher-hakkaart/nf-core-demo` pipeline the name of your favorite color using the [`multiqc_title`](https://github.com/christopher-hakkaart/nf-core-demo/blob/master/nextflow.config#L27) parameter in a custom `.config` file:
+    Package the parameters from the previous lesson into a `.json` file and run the pipeline using the `-params-file` option:
 
+    ```console
+    nextflow run nf-core/sarek \
+        --input samplesheet.csv \
+        --igenomes_ignore \
+        --dbsnp "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz" \
+        --fasta "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta" \
+        --germline_resource "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz" \
+        --intervals "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list" \
+        --known_indels "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz" \
+        --snpeff_db 105 \
+        --snpeff_genome "WBcel235" \
+        --snpeff_version "5.1" \
+        --tools "freebayes" \
+        --vep_cache_version "106" \
+        --vep_genome "WBcel235" \
+        --vep_species "caenorhabditis_elegans" \
+        --vep_version "106.1" \
+        --max_cpus 4 \
+        --max_memory 6.5GB \
+        --output "my_results"
+        -profile singularity \
+        -r 3.2.3
+    ```
+    
     ??? success "Solution"
 
-        Create a custom `.config` file that contains your favourite colour, e.g., blue:
-
-        ```console title="custom.config"
-        params.multiqc_title = "blue"
-        ```
-
-        Include the custom `.config` file in your execution command with the `-c` option:
-
-        ```bash
-        nextflow run christopher-hakkaart/nf-core-demo -profile test,singularity -r main -resume -c custom.config 
-        ```
-
-        Check that it has been applied:
-
-        ```bash
-        ls results/multiqc/
-        ```
-
-        **Why did this fail?**
-
-        You **can not** use the `params` scope in custom configuration files. Parameters can only be configured using the `-params-file` option and the command line. While it parameter is listed as a parameter on the `STDOUT`, it **was not** applied to the executed command:
-
-        ```bash
-        nextflow log
-        nextflow log <run name> -f "process,script"
-        ```
-
-The `process` scope allows you to configure pipeline processes and is used extensively to define resources and additional arguments for modules.
-
-By default, process resources are allocated in the `conf/base.config` file using the `withLabel` selector:
-
-```bash title="base.config"
-process {
-    withLabel: BIG_JOB {
-        cpus = 16
-        memory = 64.GB
-    }
-}
-```
-
-Similarly, the `withName` selector enables the configuration of a process by name. By default, module parameters are defined in the `conf/modules.config` file:
-
-```bash title="modules.config"
-process {
-    withName: MYPROCESS {
-        cpus = 4
-        memory = 8.GB
-    }
-}
-```
-
-While some tool arguments are included as a part of a module. To make modules sharable across pipelines, most tool arguments are defined in the `conf/modules.conf` file in the pipeline code under the `ext.args` entry.
-
-Importantly, having these arguments outside of the module also allows them to be customised at runtime.
-
-<br>
-<p align="left"><img src="../../images/1_3_args.excalidraw.png" alt="drawing" width="900"/></p> 
-<br>
-
-For example, if you were trying to add arguments in the `MULTIQC` process in the `christopher-hakkaart/nf-core-demo` pipeline, you could use the process scope:
-
-```console title="custom.config"
-process {
-    withName : ".*:MULTIQC" {
-        ext.args   = { "<your custom parameter>" }
-
-    }
-```
-
-However, if a process is used multiple times in the same pipeline, an extended execution path of the module may be required to make it more specific:
-
-```console title="custom.config"
-process {
-    withName: "NFCORE_DEMO:DEMO:MULTIQC" {
-        ext.args = "<your custom parameter>"
-    }
-}
-```
-
-The extended execution path is built from the pipelines, subworkflows, and module used to execute the process.
-
-In the example above, the nf-core [`MULTIQC`](https://github.com/christopher-hakkaart/nf-core-demo/blob/master/modules/nf-core/multiqc/main.nf) module, was called by the [`DEMO`](https://github.com/christopher-hakkaart/nf-core-demo/blob/master/workflows/demo.nf) pipeline, which was called by the [`NFCORE_DEMO`](https://github.com/christopher-hakkaart/nf-core-demo/blob/master/main.nf) pipeline in the `main.nf` file.
-
-!!! tip "How to build an extended execution path"
-
-    It can be tricky to evaluate the path used to execute a module. If you are unsure of how to build the path you can copy it from the `conf/modules.conf` file. How arguments are added to a process can also vary. Be vigilant.
-
-!!! question "Exercise" 
-
-    Create a new `.config` file that uses the `process` scope to overwrite the `args` for the `MULTIQC` process. Change the `args` to your favourite **month** of the year, e.g, `"--title \"october\""`.
-
-    In this example, the `\` is used to escape the `"` in the string. This is required to ensure the string is passed correctly to the `MULTIQC` module.
-
-    ??? success "Solution"
-
-        Make a custom config file that uses the `process` scope to replace the `args` for the `MULTIQC` process:
-
-        ```console title="custom.config"
-        process {
-            withName: "NFCORE_DEMO:DEMO:MULTIQC" {
-                ext.args = "--title \"october\""
-            }
-        }
-        ```
-
-        Execute your run command again with the custom configuration file:
-
-        ```bash
-        nextflow run christopher-hakkaart/nf-core-demo -r main -profile test,singularity -resume -c custom.config
-        ```
-
-        Check that it has been applied:
-
-        ```bash
-        ls results/multiqc/
-        ```
-
-!!! question "Exercise" 
-
-    Demonstrate the configuration hierarchy using the `christopher-hakkaart/nf-core-demo` pipeline by adding a params file (`-params-file`), and a command line flag (`--multiqc_title`) to your execution. You can use the files you have already created. Make sure that the `--multiqc_title` is different to the `multiqc_title` in your params file and different to the title you have used in the past.
-
-    ??? success "Solution"
-
-        Use the `.json` file you created previously:
-
-        ```json title="my-custom-params.json"
+        ```json title="my-params.json"
         {
-        "multiqc_title": "cheese"
+            "igenomes_ignore": true,
+            "dbsnp": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz",
+            "fasta": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta",
+            "germline_resource": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz",
+            "intervals": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list",
+            "known_indels": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz",
+            "snpeff_db": 105,
+            "snpeff_genome": "WBcel235",
+            "snpeff_version": "5.1",
+            "tools":  "freebayes", 
+            "vep_cache_version": 106,
+            "vep_genome": "WBcel235",
+            "vep_species": "caenorhabditis_elegans",
+            "vep_version": "106.1",
+            "max_cpus": 4,
+            "max_memory": "6.5 GB",
+            "outdir": "my_results_2"
         }
         ```
 
-        Execute your command with your params file (`-params-file`) and a command line flag (`--multiqc_title`):
+        Your execution command will now look like this:
 
         ```bash
-        nextflow run christopher-hakkaart/nf-core-demo -r main -profile test,singularity -resume -params-file my_custom_params.json --multiqc_title "cake"
+        nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r 3.2.3
         ```
 
-        In this example, as the command line is at the top of the hierarchy, the `multiqc_title` will be "cake".
+        Note that in this example we kept `--input samplesheet.csv` in the execution command. However, this could have put this in the `.json` file. You can pick and choose which parameters go in a params file and which parameters go in your execution command.
+
+Due to the order of priority, you can modify parameters you want to change without having to edit your newly created parameters file.
+
+!!! question "Exercise"
+
+    Include both `freebayes` and `strelka` as variant callers using the `tools` parameter and run the pipeline again.
+
+    For this option, you will need to use the `--tools` flag and include both variant callers in the same string separated by a comma, e.g., `--tools "<tool1>,<tool2>"`
+
+    You can also use `-resume` to resume the pipeline from the last successful step.
+
+    ??? success "Solution"
+
+        ```bash
+        nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r 3.2.3 --tools "freebayes,strelka" -resume 
+        ```
+
 
 <br>
 !!! circle-info ""

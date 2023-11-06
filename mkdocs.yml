@@ -25,7 +25,8 @@ nav:
     - session_3/0_homeStretchOverview.md
     - session_3/1_configFiles.md
     - session_3/2_configuration.md  
-
+  - Appendix:
+    - session_3/3_appendix.md
 
 theme:
   name: material
