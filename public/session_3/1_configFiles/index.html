@@ -590,13 +590,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#default-configuration-files" class="md-nav__link">
-    Default configuration files
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#custom-configuration-files" class="md-nav__link">
     Custom configuration files
   </a>
@@ -612,6 +605,19 @@
   <a href="#customizing-parameters" class="md-nav__link">
     Customizing parameters
   </a>
+  
+    <nav class="md-nav" aria-label="Customizing parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-configuration-files" class="md-nav__link">
+    Default configuration files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -750,13 +756,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#default-configuration-files" class="md-nav__link">
-    Default configuration files
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#custom-configuration-files" class="md-nav__link">
     Custom configuration files
   </a>
@@ -772,6 +771,19 @@
   <a href="#customizing-parameters" class="md-nav__link">
     Customizing parameters
   </a>
+  
+    <nav class="md-nav" aria-label="Customizing parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-configuration-files" class="md-nav__link">
+    Default configuration files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -865,6 +877,97 @@
 </code></pre></div>
 </details>
 </div>
+<h3 id="custom-configuration-files">Custom configuration files<a class="headerlink" href="#custom-configuration-files" title="Permanent link">&para;</a></h3>
+<p>Nextflow will also look for files that are external to the pipeline project directory. These files include:</p>
+<ul>
+<li>The config file <code>$HOME/.nextflow/config</code></li>
+<li>A config file named <code>nextflow.config</code> in your current directory</li>
+<li>Custom files specified using the command line<ul>
+<li>A parameter file that is provided using the <code>-params-file</code> option</li>
+<li>A config file that are provided using the <code>-c</code> option</li>
+</ul>
+</li>
+</ul>
+<p>You don't need to use all of these files to execute your pipeline.</p>
+<p>** Parameter files</p>
+<p>Parameter files are <code>.json</code> files that can contain an unlimited number of parameters:</p>
+<div class="highlight"><span class="filename">my-params.json</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter1_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter2_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter3_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>You can override default parameters by creating a custom <code>.json</code> file and passing it as a command-line argument using the <code>-param-file</code> option.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile test,singularity -r main -param-file &lt;path/to/params.json&gt;
+</code></pre></div>
+<h2 id="customizing-parameters">Customizing parameters<a class="headerlink" href="#customizing-parameters" title="Permanent link">&para;</a></h2>
+<p>Let's take the skills from the previous section and apply them to customise the execution of the Sarek pipeline.</p>
+<p>Remember that previoiusly we supplied a series of Sarek pipeline parameters as flags in your run command (<code>--</code>). Here, we will package these into a <code>.json</code> file and use the <code>-params-file</code> option.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Package the parameters from the previous lesson into a <code>.json</code> file and run the pipeline using the <code>-params-file</code> option:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="go">nextflow run nf-core/sarek \</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="go">    --input samplesheet.csv \</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="go">    --igenomes_ignore \</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="go">    --dbsnp &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot; \</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="go">    --fasta &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot; \</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="go">    --germline_resource &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot; \</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="go">    --intervals &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot; \</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="go">    --known_indels &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot; \</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="go">    --snpeff_db 105 \</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="go">    --snpeff_genome &quot;WBcel235&quot; \</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="go">    --snpeff_version &quot;5.1&quot; \</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="go">    --tools &quot;freebayes&quot; \</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="go">    --vep_cache_version &quot;106&quot; \</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="go">    --vep_genome &quot;WBcel235&quot; \</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="go">    --vep_species &quot;caenorhabditis_elegans&quot; \</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="go">    --vep_version &quot;106.1&quot; \</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="go">    --max_cpus 4 \</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="go">    --max_memory 6.5GB \</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="go">    --output &quot;my_results&quot;</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="go">    -profile singularity \</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="go">    -r 3.2.3</span>
+</code></pre></div>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><span class="filename">my-params.json</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">&quot;igenomes_ignore&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;dbsnp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">&quot;fasta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nt">&quot;germline_resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">&quot;intervals&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="nt">&quot;known_indels&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="nt">&quot;snpeff_db&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">105</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="nt">&quot;snpeff_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="nt">&quot;snpeff_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5.1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;freebayes&quot;</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="nt">&quot;vep_cache_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">106</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="nt">&quot;vep_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="nt">&quot;vep_species&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;caenorhabditis_elegans&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="nt">&quot;vep_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;106.1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="nt">&quot;max_cpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="nt">&quot;max_memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6.5 GB&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="nt">&quot;outdir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_results_2&quot;</span><span class="w"></span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>Your execution command will now look like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3
+</code></pre></div>
+<p>Note that in this example we kept <code>--input samplesheet.csv</code> in the execution command. However, this could have put this in the <code>.json</code> file. You can pick and choose which parameters go in a params file and which parameters go in your execution command.</p>
+</details>
+</div>
+<p>Due to the order of priority, you can modify parameters you want to change without having to edit your newly created parameters file.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<p>Include both <code>freebayes</code> and <code>strelka</code> as variant callers using the <code>tools</code> parameter and run the pipeline again.</p>
+<p>For this option, you will need to use the <code>--tools</code> flag and include both variant callers in the same string separated by a comma, e.g., <code>--tools "&lt;tool1&gt;,&lt;tool2&gt;"</code></p>
+<p>You can also use <code>-resume</code> to resume the pipeline from the last successful step.</p>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3 --tools <span class="s2">&quot;freebayes,strelka&quot;</span> -resume 
+</code></pre></div>
+</details>
+</div>
 <h3 id="default-configuration-files">Default configuration files<a class="headerlink" href="#default-configuration-files" title="Permanent link">&para;</a></h3>
 <p>All parameters will have a default setting that is defined using the <code>nextflow.config</code> file in the pipeline project directory. By default, most parameters are set to <code>null</code> or <code>false</code> and are only activated by a profile or configuration file.</p>
 <p>There are also several <code>includeConfig</code> statements in the <code>nextflow.config</code> file that are used to include additional <code>.config</code> files from the <code>conf/</code> folder. Each additional <code>.config</code> file contains categorised configuration information for your pipeline execution, some of which can be optionally included:</p>
@@ -897,7 +1000,7 @@
 </li>
 </ul>
 <p>Notably, configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the <code>-profile</code> command option:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile &lt;profile&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile &lt;profile&gt;
 </code></pre></div>
 <p>Profiles used by nf-core pipelines include:</p>
 <ul>
@@ -911,104 +1014,13 @@
 </li>
 </ul>
 <p>Multiple profiles can be specified in a comma-separated (<code>,</code>) list when you execute your command. The order of profiles is important as they will be read from left to right:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile test,singularity
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile test,singularity
 </code></pre></div>
 <p>nf-core pipelines are required to define <strong>software containers</strong> and <strong>conda environments</strong> that can be activated using profiles. Although it is possible to run the pipelines with software installed by other methods (e.g., environment modules or manual installation), using Docker or Singularity is more convenient and more reproducible.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you're computer has internet access and one of Conda, Singularity, or Docker installed, you should be able to run any nf-core pipeline with the <code>test</code> profile and the respective software management profile 'out of the box'.</p>
 <p>The <code>test</code> data profile will pull small test files directly from the <code>nf-core/test-data</code> GitHub repository and run it on your local system. The <code>test</code> profile is an important control to check the pipeline is working as expected and is a great way to trial a pipeline. Some pipelines have multiple test <code>profiles</code> for you to try.</p>
-</div>
-<h3 id="custom-configuration-files">Custom configuration files<a class="headerlink" href="#custom-configuration-files" title="Permanent link">&para;</a></h3>
-<p>Nextflow will also look for files that are external to the pipeline project directory. These files include:</p>
-<ul>
-<li>The config file <code>$HOME/.nextflow/config</code></li>
-<li>A config file named <code>nextflow.config</code> in your current directory</li>
-<li>Custom files specified using the command line<ul>
-<li>A parameter file that is provided using the <code>-params-file</code> option</li>
-<li>A config file that are provided using the <code>-c</code> option</li>
-</ul>
-</li>
-</ul>
-<p>You don't need to use all of these files to execute your pipeline.</p>
-<p>** Parameter files</p>
-<p>Parameter files are <code>.json</code> files that can contain an unlimited number of parameters:</p>
-<div class="highlight"><span class="filename">my-params.json</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter1_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter2_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">   </span><span class="nt">&quot;&lt;parameter3_name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">}</span><span class="w"></span>
-</code></pre></div>
-<p>You can override default parameters by creating a custom <code>.json</code> file and passing it as a command-line argument using the <code>-param-file</code> option.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nextflow run nf-core/&lt;workflow&gt; -profile test,singularity -r main -param-file &lt;path/to/params.json&gt;
-</code></pre></div>
-<h2 id="customizing-parameters">Customizing parameters<a class="headerlink" href="#customizing-parameters" title="Permanent link">&para;</a></h2>
-<p>Let's take the skills from the previous section and apply them to customise the execution of the Sarek pipeline.</p>
-<p>Remember that previoiusly we supplied a series of Sarek pipeline parameters as flags in your run command (<code>--</code>). Here, we will package these into a <code>.json</code> file and use the <code>-params-file</code> option.</p>
-<div class="admonition question">
-<p class="admonition-title">Exercise</p>
-<p>Package the parameters from the previous lesson into a <code>.json</code> file and run the pipeline using the <code>-params-file</code> option:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="go">nextflow run nf-core/sarek \</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="go">    --input samplesheet.csv \</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="go">    --igenomes_ignore \</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="go">    --dbsnp &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot; \</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="go">    --fasta &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot; \</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="go">    --germline_resource &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot; \</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="go">    --intervals &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot; \</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="go">    --known_indels &quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot; \</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="go">    --snpeff_db 105 \</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="go">    --snpeff_genome &quot;WBcel235&quot; \</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="go">    --snpeff_version &quot;5.1&quot; \</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="go">    --tools &quot;freebayes&quot; \</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="go">    --vep_cache_version &quot;106&quot; \</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="go">    --vep_genome &quot;WBcel235&quot; \</span>
-<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="go">    --vep_species &quot;caenorhabditis_elegans&quot; \</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="go">    --vep_version &quot;106.1&quot; \</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="go">    --max_cpus 4 \</span>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="go">    --max_memory 6.5GB \</span>
-<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="go">    --output &quot;my_results&quot;</span>
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="go">    -profile singularity \</span>
-<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="go">    -r 3.2.3</span>
-</code></pre></div>
-<details class="success">
-<summary>Solution</summary>
-<div class="highlight"><span class="filename">my-params.json</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">&quot;igenomes_ignore&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;dbsnp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;fasta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">&quot;germline_resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/gnomAD.r2.1.1.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">&quot;intervals&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nt">&quot;known_indels&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nt">&quot;snpeff_db&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">105</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="nt">&quot;snpeff_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="nt">&quot;snpeff_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5.1&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;freebayes&quot;</span><span class="p">,</span><span class="w"> </span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="nt">&quot;vep_cache_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">106</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="nt">&quot;vep_genome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WBcel235&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">    </span><span class="nt">&quot;vep_species&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;caenorhabditis_elegans&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">    </span><span class="nt">&quot;vep_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;106.1&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">    </span><span class="nt">&quot;max_cpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">    </span><span class="nt">&quot;max_memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6.5 GB&quot;</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">    </span><span class="nt">&quot;outdir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_results_2&quot;</span><span class="w"></span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="p">}</span><span class="w"></span>
-</code></pre></div>
-<p>Your execution command will now look like this:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3
-</code></pre></div>
-<p>Note that in this example we kept <code>--input samplesheet.csv</code> in the execution command. However, this could have put this in the <code>.json</code> file. You can pick and choose which parameters go in a params file and which parameters go in your execution command.</p>
-</details>
-</div>
-<p>Due to the order of priority, you can modify parameters you want to change without having to edit your newly created parameters file.</p>
-<div class="admonition question">
-<p class="admonition-title">Exercise</p>
-<p>Include both <code>freebayes</code> and <code>strelka</code> as variant callers using the <code>tools</code> parameter and run the pipeline again.</p>
-<p>For this option, you will need to use the <code>--tools</code> flag and include both variant callers in the same string separated by a comma, e.g., <code>--tools "&lt;tool1&gt;,&lt;tool2&gt;"</code></p>
-<p>You can also use <code>-resume</code> to resume the pipeline from the last successful step.</p>
-<details class="success">
-<summary>Solution</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r <span class="m">3</span>.2.3 --tools <span class="s2">&quot;freebayes,strelka&quot;</span> -resume 
-</code></pre></div>
-</details>
 </div>
 <p><br></p>
 <div class="admonition circle-info"></div>

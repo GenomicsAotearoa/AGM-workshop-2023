@@ -100,57 +100,6 @@ nextflow nf-core/<workflow> --<parameter> string
         nextflow log <run name> -f "process,script"
         ```
 
-### Default configuration files
-
-All parameters will have a default setting that is defined using the `nextflow.config` file in the pipeline project directory. By default, most parameters are set to `null` or `false` and are only activated by a profile or configuration file.
-
-There are also several `includeConfig` statements in the `nextflow.config` file that are used to include additional `.config` files from the `conf/` folder. Each additional `.config` file contains categorised configuration information for your pipeline execution, some of which can be optionally included:
-
-- `base.config`
-    - Included by the pipeline by default.
-    - Generous resource allocations using labels.
-    - Does not specify any method for software management and expects software to be available (or specified elsewhere).
-- `igenomes.config`
-    - Included by the pipeline by default.
-    - Default configuration to access reference files stored on [AWS iGenomes](https://ewels.github.io/AWS-iGenomes/).
-- `modules.config`
-    - Included by the pipeline by default.
-    - Module-specific configuration options (both mandatory and optional).
-- `test.config`
-    - Only included if specified as a profile.
-    - A configuration profile to test the pipeline with a small test dataset.
-- `test_full.config`
-    - Only included if specified as a profile.
-    - A configuration profile to test the pipeline with a full-size test dataset.
-
-Notably, configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the `-profile` command option:
-
-```bash
-nextflow run nf-core/<workflow> -profile <profile>
-```
-
-Profiles used by nf-core pipelines include:
-
-- **Software management profiles**
-    - Profiles for the management of software using software management tools, e.g., `docker`, `singularity`, and `conda`.
-- **Test profiles**
-    - Profiles to execute the pipeline with a standardised set of test data and parameters, e.g., `test` and `test_full`.
-
-Multiple profiles can be specified in a comma-separated (`,`) list when you execute your command. The order of profiles is important as they will be read from left to right:
-
-```bash
-nextflow run nf-core/<workflow> -profile test,singularity
-```
-
-nf-core pipelines are required to define **software containers** and **conda environments** that can be activated using profiles. Although it is possible to run the pipelines with software installed by other methods (e.g., environment modules or manual installation), using Docker or Singularity is more convenient and more reproducible.
-
-!!! tip 
-
-    If you're computer has internet access and one of Conda, Singularity, or Docker installed, you should be able to run any nf-core pipeline with the `test` profile and the respective software management profile 'out of the box'.
-    
-    The `test` data profile will pull small test files directly from the `nf-core/test-data` GitHub repository and run it on your local system. The `test` profile is an important control to check the pipeline is working as expected and is a great way to trial a pipeline. Some pipelines have multiple test `profiles` for you to try.
-
-
 ### Custom configuration files
 
 Nextflow will also look for files that are external to the pipeline project directory. These files include:
@@ -262,6 +211,59 @@ Due to the order of priority, you can modify parameters you want to change witho
         ```bash
         nextflow run nf-core/sarek --input samplesheet.csv -params-file my-params.json -profile singularity -r 3.2.3 --tools "freebayes,strelka" -resume 
         ```
+
+### Default configuration files
+
+All parameters will have a default setting that is defined using the `nextflow.config` file in the pipeline project directory. By default, most parameters are set to `null` or `false` and are only activated by a profile or configuration file.
+
+There are also several `includeConfig` statements in the `nextflow.config` file that are used to include additional `.config` files from the `conf/` folder. Each additional `.config` file contains categorised configuration information for your pipeline execution, some of which can be optionally included:
+
+- `base.config`
+    - Included by the pipeline by default.
+    - Generous resource allocations using labels.
+    - Does not specify any method for software management and expects software to be available (or specified elsewhere).
+- `igenomes.config`
+    - Included by the pipeline by default.
+    - Default configuration to access reference files stored on [AWS iGenomes](https://ewels.github.io/AWS-iGenomes/).
+- `modules.config`
+    - Included by the pipeline by default.
+    - Module-specific configuration options (both mandatory and optional).
+- `test.config`
+    - Only included if specified as a profile.
+    - A configuration profile to test the pipeline with a small test dataset.
+- `test_full.config`
+    - Only included if specified as a profile.
+    - A configuration profile to test the pipeline with a full-size test dataset.
+
+Notably, configuration files can also contain the definition of one or more profiles. A profile is a set of configuration attributes that can be activated when launching a pipeline by using the `-profile` command option:
+
+```bash
+nextflow run nf-core/<workflow> -profile <profile>
+```
+
+Profiles used by nf-core pipelines include:
+
+- **Software management profiles**
+    - Profiles for the management of software using software management tools, e.g., `docker`, `singularity`, and `conda`.
+- **Test profiles**
+    - Profiles to execute the pipeline with a standardised set of test data and parameters, e.g., `test` and `test_full`.
+
+Multiple profiles can be specified in a comma-separated (`,`) list when you execute your command. The order of profiles is important as they will be read from left to right:
+
+```bash
+nextflow run nf-core/<workflow> -profile test,singularity
+```
+
+nf-core pipelines are required to define **software containers** and **conda environments** that can be activated using profiles. Although it is possible to run the pipelines with software installed by other methods (e.g., environment modules or manual installation), using Docker or Singularity is more convenient and more reproducible.
+
+!!! tip 
+
+    If you're computer has internet access and one of Conda, Singularity, or Docker installed, you should be able to run any nf-core pipeline with the `test` profile and the respective software management profile 'out of the box'.
+    
+    The `test` data profile will pull small test files directly from the `nf-core/test-data` GitHub repository and run it on your local system. The `test` profile is an important control to check the pipeline is working as expected and is a great way to trial a pipeline. Some pipelines have multiple test `profiles` for you to try.
+
+
+
 
 
 <br>
