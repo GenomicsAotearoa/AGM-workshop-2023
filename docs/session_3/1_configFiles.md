@@ -37,7 +37,7 @@ Understanding how and when these files are interpreted by Nextflow is critical f
 
 **Parameters** are pipeline specific settings that can be used to customise the execution of a pipeline. 
 
-Every nf-core pipeline has a [full list of parameters](https://nf-co.re/sarek/3.2.3/parameters) on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will have additional text to help you understand when and how a parameter should be used.
+Every nf-core pipeline has a [full list of parameters](https://nf-co.re/sarek/3.2.3/parameters){:target="_blank"} on the nf-core website. When viewing these parameters online, you will also be shown a description and the type of the parameter. Some parameters will have additional text to help you understand when and how a parameter should be used.
 
 Parameters and their descriptions can also be viewed in the command line using the `run` command with the `--help` parameter:
 
