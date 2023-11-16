@@ -67,11 +67,11 @@ Joining multiple nf-core and Nextflow channels is important to keep up to date w
 
 !!! question "Exercise"
 
-    Join the [nf-core Slack](https://nf-co.re/join/slack) and fill in your profile information. If you're joining the nf-core Slack for the first time make sure you drop a message in `#say-hello` to introduce yourself! 👋
+    Join the [nf-core Slack](https://nf-co.re/join/slack){:target="_blank"} and fill in your profile information. If you're joining the nf-core Slack for the first time make sure you drop a message in `#say-hello` to introduce yourself! 👋
 
     ??? success "Solution"
 
-        Follow [this link](https://nf-co.re/join/slack) to join the nf-core Slack. Follow the instructions to enter your credentials and update your profile. Even if you are already a member of the nf-core Slack, it's a great time to check your profile is up-to-date.
+        Follow [this link](https://nf-co.re/join/slack){:target="_blank"} to join the nf-core Slack. Follow the instructions to enter your credentials and update your profile. Even if you are already a member of the nf-core Slack, it's a great time to check your profile is up-to-date.
 
 ## nf-core tools
 

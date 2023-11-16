@@ -566,7 +566,7 @@ To print all the relevant paths to the screen, use the `-ansi-log` option can be
 nextflow run christopher-hakkaart/nf-core-demo -profile test,singularity -r main -ansi-log false
 ```
 
-It's very likely you will execute a pipeline multiple times as you find the parameters that best suit your data. You can save a lot of spaces (and time) if you **resume** a pipeline from the last step that was completed successfully or unmodified.
+It's very likely you will execute a pipeline multiple times as you find the parameters that best suit your data. You can save a lot of space (and time) if you **resume** a pipeline from the last step that was completed successfully or unmodified.
 
 By adding the `-resume` option to your `run` command you can use the cache rather than re-running successful tasks:
 
