@@ -112,7 +112,7 @@ Nextflow will also look for files that are external to the pipeline project dire
 
 You don't need to use all of these files to execute your pipeline.
 
-** Parameter files
+### Parameter files
 
 Parameter files are `.json` files that can contain an unlimited number of parameters:
 
