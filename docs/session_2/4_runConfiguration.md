@@ -73,11 +73,11 @@ The following parameters can be used to specify the required reference/annotatio
     --intervals "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list" \
     --known_indels "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz" \
     --snpeff_db 105 \
-    --snpeff_genome "WBcel235" \
+    --snpeff_genome "GRCh38" \
     --snpeff_version "5.1" \
     --vep_cache_version "106" \
-    --vep_genome "WBcel235" \
-    --vep_species "caenorhabditis_elegans" \
+    --vep_genome "GRCh38" \
+    --vep_species "homo_sapiens" \
     --vep_version "106.1" \
     --max_cpus 2 \
     --max_memory 6.5GB \
@@ -131,11 +131,11 @@ The completed run command will execute a small test set of files using the freeb
             --intervals "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.interval_list" \
             --known_indels "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/mills_and_1000G.indels.vcf.gz" \
             --snpeff_db 105 \
-            --snpeff_genome "WBcel235" \
+            --snpeff_genome "GRCh38" \
             --snpeff_version "5.1" \
             --vep_cache_version "106" \
-            --vep_genome "WBcel235" \
-            --vep_species "caenorhabditis_elegans" \
+            --vep_genome "GRCh38" \
+            --vep_species "homo_sapiens" \
             --vep_version "106.1" \
             --max_cpus 2 \
             --max_memory 6.5GB \
